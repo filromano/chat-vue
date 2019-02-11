@@ -1,32 +1,67 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld/>
+    <div class="container">
+      <div class="row" style="margin-bottom:10px;">
+        <div class="col-sm">
+          <button type="button" class="btn btn-primary" @click="startChat">Start Chat</button>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:10px;">
+        <div class="col-sm">
+          <input class="form-control form-control-lg" type="text" v-model="respostadaMensages">
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:10px;">
+        <div class="col-sm">
+          <input class="form-control form-control-lg" type="text" v-model="message" @keyup.enter="sendMessage">
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:10px;">
+        <div class="col-sm">
+          <button type="button" class="btn btn-secondary" @click="sendMessage">Send</button>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   data(){
     return {
-      message: 'which stores?'
+      message: '',
+      respostadaMensages: ''
     }
   },
-  components: {
-    HelloWorld
-  },
-  created(){
-    axios.post('http://localhost:3000/conversation/', {
-      message: this.message
-    })
-      
-    .then(response => {})
-    .catch(e => {
-      this.errors.push(e)
-    })
+  methods:{
+    startChat(){
+      console.log('comecar o chat');
+      axios.post('http://localhost:8080/conversation/', {
+        message: this.message
+      })
+        
+      .then(response => {
+         this.respostadaMensages = response.data.text
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+    sendMessage(){
+      axios.post('http://localhost:8080/conversation/', {
+          message: this.message
+        })
+          
+        .then(response => {
+          this.respostadaMensages = response.data.text
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+    }
   }
 }
 </script>
