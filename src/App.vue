@@ -1,17 +1,32 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld/>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'app',
+  data(){
+    return {
+      message: 'which stores?'
+    }
+  },
   components: {
     HelloWorld
+  },
+  created(){
+    axios.post('http://localhost:3000/conversation/', {
+      message: this.message
+    })
+      
+    .then(response => {})
+    .catch(e => {
+      this.errors.push(e)
+    })
   }
 }
 </script>
