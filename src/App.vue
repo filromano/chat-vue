@@ -33,26 +33,30 @@ export default {
   data(){
     return {
       message: '',
-      respostadaMensages: ''
+      respostadaMensages: '',
+      sessionId: ''
     }
   },
   methods:{
     startChat(){
       console.log('comecar o chat');
-      axios.post('http://localhost:8080/conversation/', {
-        message: this.message
+      axios.post('http://localhost:3000/conversation/', {
+        message: this.message,
+        sessionId: this.sessionId
       })
         
       .then(response => {
          this.respostadaMensages = response.data.text
+         this.sessionId = response.data.sessionId
       })
       .catch(e => {
         this.errors.push(e)
       })
     },
     sendMessage(){
-      axios.post('http://localhost:8080/conversation/', {
-          message: this.message
+      axios.post('http://localhost:3000/conversation/', {
+          message: this.message,
+          sessionId: this.sessionId
         })
           
         .then(response => {
