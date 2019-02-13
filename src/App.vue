@@ -11,7 +11,7 @@
           <div v-else>
             <div class="row">
               <div class="col-sm">
-                <div class="list-group chatbox" id="a">
+                <div id="chatbox" class="list-group">
                   <div v-for="message in arrayMensagens" :key="message.index">
                     <span class="list-group-item list-group-item-primary" v-if="message.type === 'chatbot'">{{ message.text }}</span>
                     <span class="list-group-item list-group-item-success" v-if="message.type === 'user'">{{ message.text }}</span>
@@ -54,6 +54,12 @@ export default {
     }
   },
   methods:{
+    scrollTop(){
+      this.$nextTick(() =>{
+        var objDiv = document.getElementById('chatbox');
+        objDiv.scrollTop = objDiv.scrollHeight;
+      });
+    },
     startChat(){
       console.log('comecar o chat');
       axios.post('http://localhost:3000/conversation/', {
@@ -73,6 +79,7 @@ export default {
     },
     sendMessage(){
       this.arrayMensagens.push({type: 'user', text: this.message});
+      this.scrollTop()
       axios.post('http://localhost:3000/conversation/', {
           message: this.message,
           sessionId: this.sessionId
@@ -82,18 +89,11 @@ export default {
         this.respostadaMensages = response.data.text
         this.arrayMensagens.push({type: 'chatbot', text: this.respostadaMensages});
         this.message = ''
-        this.$nextTick(() =>{
-          var objDiv = document.getElementById('a');
-          objDiv.scrollTop = objDiv.scrollHeight;
-        });
+        this.scrollTop()
       })
       .catch(e => {
         this.errors.push(e)
       })
-      this.$nextTick(() =>{
-        var objDiv = document.getElementById('a');
-        objDiv.scrollTop = objDiv.scrollHeight;
-      });
     }
   }
 }
@@ -108,7 +108,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.chatbox{
+#chatbox{
   display: block;
   height: 400px;
   overflow: scroll;
