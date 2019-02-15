@@ -6,10 +6,10 @@ import { store } from './store/store'
 Vue.config.productionTip = false
 
 axios.defaults.headers.common = {
-  "Content-Type": "application/json"
+    "Content-Type": "application/json"
 }
 
 new Vue({
-  store,
-  render: h => h(App),
+    store,
+    render: h => h(App),
 }).$mount('#app')
