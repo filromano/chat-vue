@@ -37,7 +37,8 @@ export default {
         message: '',
         respostadaMensages: '',
         sessionId: '',
-        arrayMensagens: []
+        arrayMensagens: [],
+        chatbotType: 'store'
     }
   },
     methods:{
@@ -52,7 +53,8 @@ export default {
             this.scrollTop()
             axios.post('http://localhost:3000/conversation/', {
                 message: this.message,
-                sessionId: this.sessionId
+                sessionId: this.sessionId,
+                chatbotType: this.chatbotType
                 })
                 
             .then(response => {
@@ -70,7 +72,8 @@ export default {
         console.log('comecar o chat');
         axios.post('http://localhost:3000/conversation/', {
             message: this.message,
-            sessionId: this.sessionId
+            sessionId: this.sessionId,
+            chatbotType: this.chatbotType
         })
             
         .then(response => {
