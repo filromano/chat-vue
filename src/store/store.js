@@ -5,16 +5,25 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        chatNotStarted: true
+        chatNotStarted: true,
+        chatType: ''
     },
     getters: {
         chatState: state => {
             return state.chatNotStarted
+        },
+        chatTypeStore: state => {
+            return state.chatType
         }
     },
     mutations: {
-        startChat: state => {
-            state.chatNotStarted = false;
+        startChatStore: state => {
+            state.chatNotStarted = false
+            state.chatType = 'store'
+        },
+        startChatExample: state => {
+            state.chatNotStarted = false
+            state.chatType = 'example'
         }
     }
 });

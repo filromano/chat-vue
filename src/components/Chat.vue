@@ -13,7 +13,7 @@
             </div>
             <div class="row" style="margin-bottom:10px;">
                 <div class="col-sm">
-                    <input class="form-control form-control-lg" type="text" v-model="info.message" @keyup.enter="sendMessage">
+                    <input class="form-control form-control-lg" type="text" v-model="message" @keyup.enter="sendMessage">
                 </div>
             </div>
             <div class="row" style="margin-bottom:10px;">
@@ -37,11 +37,8 @@ export default {
         
         respostadaMensages: '',
         arrayMensagens: [],
-        info: {
-            chatbotType: 'store',
-            sessionId: '',
-            message: ''
-        }
+        sessionId: '',
+        message: ''
     }
   },
     methods:{
@@ -52,16 +49,20 @@ export default {
             });
         },
         sendMessage(){
-            this.arrayMensagens.push({type: 'user', text: this.info.message});
+            this.arrayMensagens.push({type: 'user', text: this.message});
             this.scrollTop()
             axios.post('http://localhost:3000/conversation/', {
-                info: this.info
+                info: {
+                    sessionId: this.sessionId,
+                    message: this.message,
+                    chatbotType: this.chatbotType
+                }
                 })
                 
             .then(response => {
                 this.respostadaMensages = response.data.text
                 this.arrayMensagens.push({type: 'chatbot', text: this.respostadaMensages});
-                this.info.message = ''
+                this.message = ''
                 this.scrollTop()
             })
             .catch(e => {
@@ -69,17 +70,25 @@ export default {
             })
         }
     },
+    computed: {
+        chatbotType(){
+            return this.$store.getters.chatTypeStore
+        }
+    },
     created() {
         console.log('comecar o chat');
         axios.post('http://localhost:3000/conversation/', {
-            info: this.info
+            info: {
+                sessionId: this.sessionId,
+                message: this.message,
+                chatbotType: this.chatbotType
+            }
         })
             
         .then(response => {
             this.respostadaMensages = response.data.text
-            this.info.sessionId = response.data.sessionId
+            this.sessionId = response.data.sessionId
             this.arrayMensagens.push({type: 'chatbot', text: this.respostadaMensages});
-            this.notStarted = false
         })
         .catch(e => {
             this.errors.push(e)
