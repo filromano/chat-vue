@@ -17,13 +17,9 @@ export const store = new Vuex.Store({
         }
     },
     mutations: {
-        startChatStore: state => {
+        startChat: (state, chat) => {
             state.chatNotStarted = false
-            state.chatType = 'store'
-        },
-        startChatExample: state => {
-            state.chatNotStarted = false
-            state.chatType = 'example'
+            state.chatType = chat
         }
     }
 });

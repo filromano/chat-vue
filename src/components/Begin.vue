@@ -12,10 +12,10 @@
 export default {
     methods: {
         startStoreChat() {
-            this.$store.commit('startChatStore');
+            this.$store.commit('startChat', 'store');
         },
         startExampleChat() {
-            this.$store.commit('startChatExample');
+            this.$store.commit('startChat', 'example');
         }
     }
 }
