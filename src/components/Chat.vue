@@ -51,7 +51,7 @@ export default {
         sendMessage(){
             this.arrayMensagens.push({type: 'user', text: this.message});
             this.scrollTop()
-            axios.post('http://localhost:3000/conversation/', {
+            axios.post('/conversation/', {
                 info: {
                     sessionId: this.sessionId,
                     message: this.message,
@@ -77,7 +77,7 @@ export default {
     },
     created() {
         console.log('comecar o chat');
-        axios.post('http://localhost:3000/conversation/', {
+        axios.post('/conversation/', {
             info: {
                 sessionId: this.sessionId,
                 message: this.message,

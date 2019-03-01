@@ -1,14 +1,14 @@
 <template>
     <div id="app">
         <div class="container">
-            <app-begin v-if="notStarted" :notStarted="notStarted"></app-begin>
+            <app-choose v-if="notStarted" :notStarted="notStarted"></app-choose>
             <app-chat v-else></app-chat>
         </div>
     </div>
 </template>
 
 <script>
-import Begin from './components/Begin.vue';
+import Choose from './components/Choose.vue';
 import Chat from './components/Chat.vue';
 
 export default {
@@ -18,7 +18,7 @@ export default {
         }
     },
     components: {
-        appBegin: Begin,
+        appChoose: Choose,
         appChat: Chat
     }
 }
