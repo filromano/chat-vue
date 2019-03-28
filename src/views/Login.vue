@@ -46,6 +46,10 @@ export default {
                     this.error = 'Email or password are invalid';
                     return
                 }
+                if(response.data.error){
+                    this.error = response.data.msg;
+                    return
+                }
                 this.$store.commit('loggedIn', response.data.data);
                 this.$router.push({ path: '/chat' });
 
