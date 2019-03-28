@@ -43,7 +43,7 @@ export default {
                 console.log('resposta')
                 console.log(response.data);
                 if(!response.data.msg){
-                    this.error = 'Email or password are invalid';
+                    this.error = 'Email or password invalid';
                     return
                 }
                 if(response.data.error){
