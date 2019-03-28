@@ -54,7 +54,10 @@ export default {
                 this.$router.push({ path: '/chat' });
 
             })
-            .catch(err => { console.log(err) })
+            .catch(err => { 
+                console.log(err)
+                this.error = 'Internal error';
+            })
         }
     },
 }
