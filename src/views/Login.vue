@@ -40,8 +40,6 @@ export default {
                 password: this.password
             })
             .then(response => {
-                console.log('resposta')
-                console.log(response.data);
                 if(!response.data.msg){
                     this.error = 'Email or password invalid';
                     return
