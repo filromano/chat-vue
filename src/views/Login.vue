@@ -14,6 +14,9 @@
                 </div>
                 <input type="password" class="form-control" v-model="password">
             </div>
+            <div v-if="error != ''" class="alert alert-danger" role="alert">
+               {{ error }}
+            </div>
             <button type="button" class="btn btn-primary" @click="login">Log in</button>
         </div>
 
@@ -26,7 +29,8 @@ export default {
     data(){
         return {
             email: '',
-            password: ''
+            password: '',
+            error: ''
         }
     },
     methods: {
@@ -36,8 +40,12 @@ export default {
                 password: this.password
             })
             .then(response => {
-                //console.log('resposta')
-                console.log(response.data.data);
+                console.log('resposta')
+                console.log(response.data);
+                if(!response.data.msg){
+                    this.error = 'Email or password are invalid';
+                    return
+                }
                 this.$store.commit('loggedIn', response.data.data);
                 this.$router.push({ path: '/chat' });
 
