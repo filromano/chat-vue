@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col-sm">
-            <p>{{ ticket }}</p>
+            <p v-if="id != ''">{{ ticket }}<br/>Link: http://localhost:1337/orders/{{ id }}</p>
         </div>
     </div>
 </template>
@@ -39,7 +39,8 @@ export default {
         arrayMensagens: [],
         sessionId: '',
         message: '',
-        ticket: ''
+        ticket: '',
+        id: ''
     }
   },
     methods:{
@@ -67,6 +68,7 @@ export default {
                 this.scrollTop()
                 if(response.data.action === 'order'){
                     this.ticket = 'A ticket was opened with your request';
+                    this.id = response.data.data;
                 }
             })
             .catch(e => {
