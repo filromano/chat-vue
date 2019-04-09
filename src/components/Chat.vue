@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col-sm">
-
+            <p>{{ ticket }}</p>
         </div>
     </div>
 </template>
@@ -38,7 +38,8 @@ export default {
         respostadaMensages: '',
         arrayMensagens: [],
         sessionId: '',
-        message: ''
+        message: '',
+        ticket: ''
     }
   },
     methods:{
@@ -64,6 +65,9 @@ export default {
                 this.arrayMensagens.push({type: 'chatbot', text: this.respostadaMensages});
                 this.message = ''
                 this.scrollTop()
+                if(response.data.action === 'order'){
+                    this.ticket = 'A ticket was opened with your request';
+                }
             })
             .catch(e => {
                 this.errors.push(e)
