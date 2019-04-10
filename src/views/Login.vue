@@ -12,7 +12,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
                 </div>
-                <input type="password" class="form-control" v-model="password">
+                <input type="password" class="form-control" v-model="password" @keypress.enter="login">
             </div>
             <div v-if="error != ''" class="alert alert-danger" role="alert">
                {{ error }}
