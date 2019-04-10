@@ -23,7 +23,15 @@
             </div>
         </div>
         <div class="col-sm">
-            <p v-if="id != ''">{{ ticket }}<br/>Link: http://localhost:1337/orders/{{ id }}</p>
+            <transition name="fade">
+                <div class="card" style="width: 70%; margin: auto;" v-if="id != ''">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p>{{ ticket }}<br/>Link: <a :href="ticketLink">{{ ticketLink }}</a></p>
+                        </div> 
+                    </div>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -67,7 +75,7 @@ export default {
                 this.message = ''
                 this.scrollTop()
                 if(response.data.action === 'order'){
-                    this.ticket = 'A ticket was opened with your request';
+                    this.ticket = 'A ticket was opened with your order';
                     this.id = response.data.data;
                 }
             })
@@ -79,6 +87,9 @@ export default {
     computed: {
         chatbotType(){
             return this.$store.getters.chatTypeStore
+        },
+        ticketLink(){
+            return 'http://localhost:1337/orders/' + this.id;
         }
     },
     created() {
@@ -108,5 +119,11 @@ export default {
     display: block;
     height: 400px;
     overflow: scroll;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
