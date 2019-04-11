@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 v-if="notStarted" class="mb-5" >Welcome {{ userInfo.cn[0] }}, which chat would you like to try?</h2>
+        <h2 v-if="notStarted" class="mb-5" >Welcome, which chat would you like to try?</h2>
         <app-choose v-if="notStarted" :notStarted="notStarted"></app-choose>
         <app-chat v-else></app-chat>
     </div>
@@ -21,9 +21,6 @@ export default {
         notStarted() {
             return this.$store.getters.chatState;
         },
-        userInfo(){
-            return this.$store.getters.userInfo;
-        }
     },
     components: {
         appChoose: Choose,

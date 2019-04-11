@@ -5,8 +5,6 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        loggedIn: false,
-        userInfo: {},
         chatNotStarted: true,
         chatType: ''
     },
@@ -26,9 +24,5 @@ export const store = new Vuex.Store({
             state.chatNotStarted = false
             state.chatType = chat
         },
-        loggedIn: (state, loggedData) => {
-            state.loggedIn = true
-            state.userInfo = loggedData
-        }
     }
 });
