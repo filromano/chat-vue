@@ -94,11 +94,16 @@ export default {
     },
     created() {
         console.log('comecar o chat');
+        console.log(this.$store.getters.getToken);
         axios.post('/conversation', {
             info: {
                 sessionId: this.sessionId,
                 message: this.message,
                 chatbotType: this.chatbotType
+            }
+        }, {
+            headers: {
+                'x-auth-token': this.$store.getters.getToken
             }
         })
             
