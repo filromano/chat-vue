@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
+        jwt: '',
         chatNotStarted: true,
         chatType: ''
     },
@@ -17,6 +18,9 @@ export const store = new Vuex.Store({
         },
         chatTypeStore: state => {
             return state.chatType
+        },
+        getToken: state => {
+            return state.jwt;
         }
     },
     mutations: {
@@ -24,5 +28,8 @@ export const store = new Vuex.Store({
             state.chatNotStarted = false
             state.chatType = chat
         },
+        newJwt: (state, jwt) => {
+            state.jwt = jwt
+        }
     }
 });
