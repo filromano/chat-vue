@@ -67,6 +67,10 @@ export default {
                     message: this.message,
                     chatbotType: this.chatbotType
                 }
+                }, {
+                    headers: {
+                        'x-auth-token': this.$store.getters.getToken
+                    }
                 })
                 
             .then(response => {
