@@ -94,7 +94,7 @@ export default {
     },
     created() {
         console.log('comecar o chat');
-        axios.post('/conversation/', {
+        axios.post('/conversation', {
             info: {
                 sessionId: this.sessionId,
                 message: this.message,

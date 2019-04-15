@@ -6,7 +6,7 @@ import { store } from './store/store'
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'https://localhost:9995';
 
 axios.defaults.headers.common = {
     "Content-Type": "application/json"
@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
         store.commit('newJwt', token);
     }
     if(store.getters.getToken === '') {
-      window.location.href = 'https://localhost:9995/user/login';
+      window.location.href = 'https://localhost:9995/user';
     } else {
         next();
     }
