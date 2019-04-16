@@ -37,7 +37,7 @@ export const store = new Vuex.Store({
         ticketMessage: state => {
             return state.ticket;
         },
-        tickedId: state => {
+        ticketId: state => {
             return state.id
         }
     },
@@ -61,7 +61,7 @@ export const store = new Vuex.Store({
         addError: (state, error) => {
             state.error.push(error);
         },
-        createTicket: (state, ticket, id) => {
+        createTicket: (state, {ticket, id}) => {
             state.ticket = ticket;
             state.id = id;
         }
@@ -103,8 +103,9 @@ export const store = new Vuex.Store({
                 .then(response => {
                     commit('addChatbotMessage', response.data.text);
                     if(response.data.action === 'order'){
-                        let message = 'A ticket was opened with your order';
-                        commit('createTicket', message, response.data.data);
+                        const message = 'A ticket was opened with your order';
+                        const id = response.data.data;
+                        commit('createTicket', {message, id});
                     }
                     resolve();
                 })
