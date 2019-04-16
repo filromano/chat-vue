@@ -37,18 +37,12 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import { mapGetters } from 'vuex';
 
 export default {
   data(){
     return {
-        
-        respostadaMensages: '',
-        arrayMensagens: [],
-        sessionId: '',
         message: '',
-        ticket: '',
-        id: ''
     }
   },
     methods:{
@@ -58,67 +52,38 @@ export default {
                 objDiv.scrollTop = objDiv.scrollHeight;
             });
         },
-        sendMessage(){
-            this.arrayMensagens.push({type: 'user', text: this.message});
+        async sendMessage(){
+            this.$store.commit('addUserMessage', this.message)
             this.scrollTop()
-            axios.post('/conversation/', {
-                info: {
-                    sessionId: this.sessionId,
-                    message: this.message,
-                    chatbotType: this.chatbotType
-                }
-                }, {
-                    headers: {
-                        'x-auth-token': this.$store.getters.getToken
-                    }
-                })
-                
-            .then(response => {
-                this.respostadaMensages = response.data.text
-                this.arrayMensagens.push({type: 'chatbot', text: this.respostadaMensages});
-                this.message = ''
-                this.scrollTop()
-                if(response.data.action === 'order'){
-                    this.ticket = 'A ticket was opened with your order';
-                    this.id = response.data.data;
-                }
-            })
-            .catch(e => {
-                this.errors.push(e)
-            })
+            await this.$store.dispatch('sendMessage', this.message)
+            this.scrollTop();
+            this.message = ''
         }
     },
     computed: {
+        sessionId(){
+            return this.$store.getters.sessionId;
+        },
+        arrayMensagens(){
+            return this.$store.getters.arrayMensagens;
+        },
         chatbotType(){
             return this.$store.getters.chatTypeStore
         },
         ticketLink(){
             return 'http://localhost:1337/orders/' + this.id;
+        },
+        ticket(){
+            return this.$store.getters.ticketMessage;
+        },
+        id(){
+            return this.$store.getters.ticketId;
         }
     },
     created() {
         console.log('comecar o chat');
         console.log(this.$store.getters.getToken);
-        axios.post('/conversation', {
-            info: {
-                sessionId: this.sessionId,
-                message: this.message,
-                chatbotType: this.chatbotType
-            }
-        }, {
-            headers: {
-                'x-auth-token': this.$store.getters.getToken
-            }
-        })
-            
-        .then(response => {
-            this.respostadaMensages = response.data.text
-            this.sessionId = response.data.sessionId
-            this.arrayMensagens.push({type: 'chatbot', text: this.respostadaMensages});
-        })
-        .catch(e => {
-            this.errors.push(e)
-        })
+        this.$store.dispatch('startChat', this.message)
     }
 }
 </script>
