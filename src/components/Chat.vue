@@ -71,7 +71,7 @@ export default {
             return this.$store.getters.chatTypeStore
         },
         ticketLink(){
-            return 'http://localhost:1337/orders/' + this.id;
+            return process.env.VUE_APP_DBLINK + '/orders/' + this.id;
         },
         ticket(){
             return this.$store.getters.ticketMessage;

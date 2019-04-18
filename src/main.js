@@ -6,20 +6,22 @@ import { store } from './store/store'
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'https://localhost:9995';
+axios.defaults.baseURL = process.env.VUE_APP_APILINK;
 
 axios.defaults.headers.common = {
     "Content-Type": "application/json"
 }
 
 router.beforeEach((to, from, next) => {
+    console.log(process.env.VUE_APP_APILINK);
+    console.log(process.env.VUE_APP_DBLINK);
     const url = new URL(window.location.href);
     const token = url.searchParams.get('token');
     if(token){
         store.commit('newJwt', token);
     }
     if(store.getters.getToken === '') {
-      window.location.href = 'https://localhost:9995/user';
+        window.location.href = process.env.VUE_APP_APILINK+'/user';
     } else {
         next();
     }
