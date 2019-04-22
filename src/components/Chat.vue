@@ -71,7 +71,7 @@ export default {
             return this.$store.getters.chatTypeStore
         },
         ticketLink(){
-            return process.env.VUE_APP_DBLINK + '/orders/' + this.id;
+            return process.env.VUE_APP_APILINK + '/order/' + this.id;
         },
         ticket(){
             return this.$store.getters.ticketMessage;

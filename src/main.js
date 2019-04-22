@@ -14,7 +14,6 @@ axios.defaults.headers.common = {
 
 router.beforeEach((to, from, next) => {
     console.log(process.env.VUE_APP_APILINK);
-    console.log(process.env.VUE_APP_DBLINK);
     const url = new URL(window.location.href);
     const token = url.searchParams.get('token');
     if(token){
